@@ -1,0 +1,24 @@
+#!/bin/bash -e
+
+if [[ "$1" == "-h" ]]; then
+  # If the 'enroute-app' assemble script is executed with '-h' flag,
+  # print the usage.
+  exec /opt/enroute/s2i/usage
+fi
+
+echo "---> Building Application from source..."
+
+chmod +x /tmp/src/gradlew
+
+exec /tmp/src/gradlew build
+
+# Export $2 the bndrun files to runnable jars if no 
+#
+if [[ "x$2" != "x" ]]; then
+ echo "Building executable jar for ${2}"
+ exec /tmp/src/gradlew "export.${2}"
+fi
+
+#
+# Last step application using JPM4J
+#
