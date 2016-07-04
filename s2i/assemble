@@ -32,7 +32,7 @@ _export_app_task="export.${ENROUTE_APP_BND_RUN}"
 #
 if [ -f "/tmp/src/${ENROUTE_APP}/generated/distributions/executable/${ENROUTE_APP_BND_RUN}.jar" ]; then
   echo "Application executable successfully generated "
-  cp -a"/tmp/src/${ENROUTE_APP}/generated/distributions/executable/${ENROUTE_APP_BND_RUN}.jar" ${HOME}
+  cp -a "/tmp/src/${ENROUTE_APP}/generated/distributions/executable/${ENROUTE_APP_BND_RUN}.jar" ${HOME}
   chmod +x "${HOME}/${ENROUTE_APP_BND_RUN}.jar"
   jpm install --name $JPM_COMMAND --force "${HOME}/${ENROUTE_APP_BND_RUN}.jar"
 fi
