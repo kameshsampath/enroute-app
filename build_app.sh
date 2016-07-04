@@ -1,0 +1,2 @@
+#!/bin/bash -e
+s2i build -e "ENROUTE_APP=osgi.enroute.examples.webserver.application" -e "ENROUTE_APP_BND_RUN=osgi.enroute.examples.webserver" -e "JPM_COMMAND=websrvr" https://github.com/osgi/osgi.enroute.examples kameshsampath/enroute-app enroute-webserver-app

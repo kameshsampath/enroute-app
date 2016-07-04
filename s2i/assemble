@@ -6,6 +6,16 @@ if [[ "$1" == "-h" ]]; then
   exec /opt/enroute/s2i/usage
 fi
 
+
+echo "Building executable jar for ${ENROUTE_APP} ...."
+
+# FIXME
+# if [ "$(ls ${HOME}/.gradle/wrapper/dists 2>/dev/null)" ]; then
+#  echo "---> Restoring gradle distros..."
+#  mkdir -p ${HOME}/.gradle/wrapper/dists
+#  mv /tmp/dists/* ${HOME}/.gradle/wrapper/dists
+# fi
+
 export JAVA_HOME=/etc/alternatives/java_sdk
 
 cd /tmp/src 
@@ -14,17 +24,17 @@ chmod +x gradlew
 
 _export_app_task="export.${ENROUTE_APP_BND_RUN}"
 
-echo "--->  Building executable jar for ${ENROUTE_APP} ...."
-
 ## FIME me enable test
-exec ./gradlew -x test build ${_export_app_task}
+./gradlew -x test build ${_export_app_task}
 
 #
-# Last step application using JPM4J
+# Install application using JPM4J
 #
 if [ -f "/tmp/src/${ENROUTE_APP}/generated/distributions/executable/${ENROUTE_APP_BND_RUN}.jar" ]; then
-  echo "Application successfully generated "
-  cp -av "/tmp/src/${ENROUTE_APP}/generated/distributions/executable/${ENROUTE_APP_BND_RUN}.jar" ${HOME}
+  echo "Application executable successfully generated "
+  cp -a"/tmp/src/${ENROUTE_APP}/generated/distributions/executable/${ENROUTE_APP_BND_RUN}.jar" ${HOME}
   chmod +x "${HOME}/${ENROUTE_APP_BND_RUN}.jar"
   jpm install --name $JPM_COMMAND --force "${HOME}/${ENROUTE_APP_BND_RUN}.jar"
 fi
+
+echo "... done"

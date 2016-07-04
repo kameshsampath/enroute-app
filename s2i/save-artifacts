@@ -1,3 +1,8 @@
 #!/bin/bash -e
 
-## TODO
+# Tar up .gradle distributions for reuse in an incremental build
+if [ -d "${HOME}/.gradle/wrapper/dists" ]; then
+   cd ${HOME}/.gradle/wrapper
+   tar cf - dists
+   cd -
+fi
